@@ -1,6 +1,12 @@
-import itertools, json
+import itertools, json, yaml
 
-def get_file(file):
+def get_yaml_file(file):
+  f = open(file, 'r')
+  data = yaml.load(f.read(), Loader=yaml.FullLoader)
+  f.close()
+  return data
+
+def get_json_file(file):
   f = open(file)
   data = json.loads(f.read())
   f.close()
@@ -13,14 +19,14 @@ def remove_from_list(source_list, to_remove):
 
 def filter_letters(space, config):
   alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  letters = remove_from_list(alphabet, config['exclude_letters'])
+  letters = remove_from_list(alphabet, str(config['exclude']).upper())
   if "exclude" in space:
-    letters = remove_from_list(letters, space['exclude'])
+    letters = remove_from_list(letters, str(space['exclude']).upper())
   return letters
 
 def parse_space(space, config):
   if isinstance(space, str):
-    return [space]
+    return [space.upper()]
   return filter_letters(space, config)
 
 def parse_spaces(config):
@@ -28,13 +34,13 @@ def parse_spaces(config):
     yield parse_space(space, config)
 
 def main():
-  config = get_file('config.json')
-  valid_words = get_file('five-letter-words.json')
+  config = get_yaml_file('config.yaml')
+  valid_words = get_json_file('five-letter-words.json')
   product = itertools.product(*list(parse_spaces(config)))
 
   for word in product:
     word_string = "".join(word)
-    is_valid = all(x in word_string for x in config['include_letters'])
+    is_valid = all(x.upper() in word_string for x in config['include'])
     if is_valid:
       if word_string.lower() in valid_words:
         print(word_string)

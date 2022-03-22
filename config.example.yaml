@@ -1,0 +1,8 @@
+spaces:
+- []
+- exclude: AO
+- L
+- exclude: A
+- []
+include: OLA
+exclude: SETMR

@@ -14,11 +14,11 @@ This will download a huge word list from [dwyl/englishwords](https://github.com/
 
 ## Configuration
 
-Edit or create the file _config.json_. You can start by copying the included _config.example.json_:
+Edit or create the file _config.yaml_. You can start by copying the included _config.example.yaml_:
 
 ```
-cp config.example.json config.json
-vi config.json
+cp config.example.json config.yaml
+vi config.yaml
 ```
 
 Make your first Wordle guess. Let's say it looks like this:
@@ -28,27 +28,26 @@ Make your first Wordle guess. Let's say it looks like this:
 You can represent this result in the config file as follows:
 
 ```
-{
-  "spaces": [
-    {},
-    { "exclude": "O" },
-    "L",
-    { "exclude": "A" },
-    {}
-  ],
-  "include_letters": "OLA",
-  "exclude_letters": "PR"
-}
+spaces:
+- []
+- exclude: O
+- L
+- exclude: A
+- []
+include: OLA
+exclude: PR
 ```
 
 Syntax for the **spaces** property:
-- Represent an unknown space with an empty object (**{}**)
-- If you know a space should not include certain letters, use the **exclude** property to list them (**"exclude": "ABC"**).
-- If you know the letter, just use a string (**"L"**).
+- Represent an unknown space with an empty list (**[]**)
+- If you know a space should not include certain letters, use the **exclude** property to list them (**exclude: ABC**).
+- If you know the letter, just use a string (**L**).
 
-The **include_letters** property specifies letters that must be present in a valid result. This should be a list of all green and yellow letters in your puzzle.
+Note: to define multiple letters for include/exclude properties, you can use list syntax instead of a string, if you prefer (**exclude: [A,B,C]**)
 
-The **exclude_letters** property specifies letters that must not be present in a valid result. This should be a list of all gray letters in your puzzle.
+The **include** property specifies letters that must be present in a valid result. This should be a list of all green and yellow letters in your puzzle.
+
+The **exclude** property specifies letters that must not be present in a valid result. This should be a list of all gray letters in your puzzle.
 
 ## Usage
 
