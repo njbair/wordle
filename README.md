@@ -17,7 +17,7 @@ This will download a huge word list from [dwyl/englishwords](https://github.com/
 Edit or create the file _config.yaml_. You can start by copying the included _config.example.yaml_:
 
 ```
-cp config.example.json config.yaml
+cp config.example.yaml config.yaml
 vi config.yaml
 ```
 
